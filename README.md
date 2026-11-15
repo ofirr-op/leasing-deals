@@ -37,7 +37,7 @@ Dates use **Asia/Jerusalem**. Open `docs/index.html` in a browser (paths are rel
 ## File layout
 
 ```
-scrape.py                 CLI: scrape → data/history/YYYY-MM-DD.json
+scrape.py                 CLI: scrape → data/history/YYYY-MM-DDTHHMMSS.json (never overwrites)
 build_site.py             CLI: snapshot + history → docs/
 leasing/                  Python package (HTTP, sources, normalize, calc, compare)
   sources/shlomo.py       Shlomo catalog (www.shlomo.co.il/leasing/catalog)
@@ -49,17 +49,18 @@ data/reference/           Static reference data (not rediscovered every run)
   licensing.json          MoT 2026 fee table, broadcasting levy, registry groups
   defaults.json           Default km, fuel, electricity, inflation
   contract terms live in copy.json; sources.json; i18n.json; pery_addons.json
-data/history/             One snapshot per day, JSON
-  2026-10-31.json         Baseline from the original scrape
-  YYYY-MM-DD.json         Later runs
+data/history/             One file per scan, never overwritten
+  2026-10-31.json         Baseline from the original scrape (legacy daily name)
+  YYYY-MM-DDTHHMMSS.json  Each later scan, including a second scan on the same day
 site_src/                 HTML/CSS/JS templates
 docs/                     Generated GitHub Pages site (committed by the Action)
+  data/history.json       Effective-price series built from every snapshot
 .github/workflows/daily.yml
 ```
 
 ## History format
 
-Each `data/history/YYYY-MM-DD.json` file looks like:
+Each scan is its own file. Older daily files are named `data/history/YYYY-MM-DD.json`. Every run of `scrape.py` now writes `data/history/YYYY-MM-DDTHHMMSS.json` (Asia/Jerusalem) and leaves previous files untouched, so two scans on one day are both kept. A file looks like:
 
 ```json
 {
@@ -79,7 +80,7 @@ Offer keys are stable: `S-{importerModel}`, `P-{id}`, `H-{itemId}`. A price drop
 
 ## Daily GitHub Action
 
-`.github/workflows/daily.yml` runs every day at **04:00 UTC** (06:00 IST in winter, 07:00 IDT in summer) and on `workflow_dispatch`. It installs dependencies, scrapes, writes today’s snapshot, builds `docs/`, commits `data/history` and `docs/`, and deploys with `actions/deploy-pages`.
+`.github/workflows/daily.yml` runs every day at **04:00 UTC** (06:00 IST in winter, 07:00 IDT in summer) and on `workflow_dispatch`. It installs dependencies, scrapes, writes a new timestamped snapshot, builds `docs/` (including `docs/data/history.json`), commits `data/history` and `docs/`, and deploys with `actions/deploy-pages`.
 
 **One-time GitHub setup** (the repo must be public for free GitHub Pages, or the owner needs GitHub Pro for a private Pages site):
 

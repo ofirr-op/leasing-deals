@@ -58,6 +58,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # data/history is append-only: each scan is a new timestamped file.
+          # docs/ includes docs/data/history.json and history.js (the chart series).
           git add data/history docs
           if git diff --staged --quiet; then
             echo "No changes to commit"

@@ -292,6 +292,7 @@
   function toc(){
     const items = [
       ["price-drops", L("Price drops","ירידות מחיר")],
+      ["price-history", L("Price history","היסטוריית מחיר")],
       ["new-removed", L("New and removed offers","הצעות חדשות ושהוסרו")],
       ["assumptions", L("Your assumptions","ההנחות שלך")],
       ["offers", L("All offers","כל ההצעות")],
@@ -421,10 +422,12 @@
         const by = {sd:null,sh:null,pd:null,ah:null};
         g.subs.forEach(s => by[slotOf(s.o)] = s);
         const label = esc(g.name)+(g.subs[0]&&g.subs[0].c.flags.some(f=>f==="no official consumption")?" *":"");
+        const chartBtn = (window.PRICE_HISTORY && (window.PRICE_HISTORY.models||[]).some(m => m.id===g.key))
+          ? `<button type="button" class="btn chart-btn" data-model="${esc(g.key)}">${esc(L("Price chart","גרף מחיר"))}</button>` : "";
         const cells = ["sd","sh","pd","ah"].map(sl => `<td>${offerCell(by[sl], g.best)}</td>`);
         const first = g.subs[0];
         const clickKey = (g.best||first).o.key;
-        return `<tr data-key="${esc(clickKey)}" class="${state.sel===clickKey||g.subs.some(s=>s.o.key===state.sel)?"active":""}"><td><strong>${label}</strong>${cn(first.o).variant?`<div class="muted">${esc(varName(cn(first.o).variant))}</div>`:""}</td><td>${esc(tr(g.pt))}</td>${cells.join("")}</tr>`;
+        return `<tr data-key="${esc(clickKey)}" class="${state.sel===clickKey||g.subs.some(s=>s.o.key===state.sel)?"active":""}"><td><strong>${label}</strong>${cn(first.o).variant?`<div class="muted">${esc(varName(cn(first.o).variant))}</div>`:""}${chartBtn}</td><td>${esc(tr(g.pt))}</td>${cells.join("")}</tr>`;
       }).join("")}</tbody></table></div>
       <p class="legend">${esc((DATA.copy&&DATA.copy.legend)?(HE()?DATA.copy.legend.he:DATA.copy.legend.en):"")}
       ${esc(HE()? (gs.length+" שורות של דגם ורמת גימור, "+gs.reduce((n,g)=>n+g.subs.length,0)+" הצעות. ★ = התשלום האפקטיבי הנמוך ביותר לפי ההנחות שלך.") : (gs.length+" model+trim rows, "+gs.reduce((n,g)=>n+g.subs.length,0)+" offers. ★ = lowest effective monthly at your inputs."))}</p>`;
@@ -437,7 +440,17 @@
     $("f-q").oninput = e => { state.q=e.target.value; renderOffersAndDetails(); };
     $("f-view").onclick = e => { const b=e.target.closest("button"); if(!b) return; state.view=b.dataset.v; renderOffersAndDetails(); };
     $("offers").querySelectorAll("tbody tr").forEach(tr => {
-      tr.addEventListener("click", () => { state.sel = tr.getAttribute("data-key"); renderOffersAndDetails(); $("details").scrollIntoView({behavior:"smooth",block:"start"}); });
+      tr.addEventListener("click", (ev) => {
+        const chart = ev.target.closest(".chart-btn");
+        if (chart) {
+          ev.stopPropagation();
+          showModelChart(chart.getAttribute("data-model"));
+          return;
+        }
+        state.sel = tr.getAttribute("data-key");
+        renderOffersAndDetails();
+        $("details").scrollIntoView({behavior:"smooth",block:"start"});
+      });
     });
 
     renderDetails(inp, gs);
@@ -516,8 +529,311 @@
       <div class="table-wrap"><table><thead><tr>${[L("Model","דגם"),L("Provider","חברה"),L("HTZone advance / monthly","HTZone מקדמה / חודשי"),L("Direct advance / monthly","ישיר מקדמה / חודשי"),L("Advance Δ","Δ מקדמה"),L("Monthly Δ","Δ חודשי"),L("Lease-payments Δ","Δ תשלומי ליסינג")].map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>`;
   }
 
+  function historyData(){ return window.PRICE_HISTORY || null; }
+
+  function modelLabel(m){
+    if (!m) return "";
+    const bits = HE()
+      ? [heOf(DATA.canonical.make_he, m.make), heOf(DATA.canonical.model_he, m.model), heOf(DATA.canonical.trim_he, m.trim)]
+      : [m.make, m.model, m.trim];
+    const name = bits.filter(Boolean).join(" ");
+    return m.pt ? name + " · " + tr(m.pt) : name;
+  }
+
+  function companyLabel(c){ return HE() ? c.he : c.en; }
+
+  function defaultChartModel(){
+    const H = historyData();
+    if (!H || !H.models || !H.models.length) return "";
+    const o = DATA.offers.find(x => x.key===state.sel);
+    if (o && H.models.some(m => m.id===grpKey(o))) return grpKey(o);
+    return H.models[0].id;
+  }
+
+  function seriesValues(list, n){
+    const arr = Array(n).fill(null);
+    (list || []).forEach(([i, eff, mo]) => {
+      if (i >= 0 && i < n && eff != null) arr[i] = {y: eff, mo: mo};
+    });
+    return arr;
+  }
+
+  function niceStep(span, count){
+    const rough = span / Math.max(1, count);
+    if (!isFinite(rough) || rough <= 0) return 1;
+    const pow = Math.pow(10, Math.floor(Math.log10(rough)));
+    const err = rough / pow;
+    const f = err <= 1 ? 1 : err <= 2 ? 2 : err <= 5 ? 5 : 10;
+    return f * pow;
+  }
+
+  function axisScale(values){
+    let min = Math.min.apply(null, values), max = Math.max.apply(null, values);
+    if (min === max) { min -= 100; max += 100; }
+    const step = niceStep(max - min, 4);
+    const lo = Math.floor(min / step) * step;
+    const hi = Math.ceil(max / step) * step || lo + step;
+    const nTicks = Math.max(1, Math.round((hi - lo) / step));
+    const ticks = [];
+    for (let i = 0; i <= nTicks; i++) ticks.push(lo + i * step);
+    return {lo, hi: lo === hi ? lo + step : hi, ticks};
+  }
+
+  function mountLineChart(host, datasets){
+    const H = historyData();
+    const scans = (H && H.scans) || [];
+    if (host._chartAbort) host._chartAbort.abort();
+    host.innerHTML = "";
+    const usable = datasets.filter(ds => (ds.values || []).some(v => v && v.y != null));
+    if (!scans.length || !usable.length){
+      host.innerHTML = `<p class="muted">${esc(L("No prices for this chart yet.","אין עדיין מחירים לגרף הזה."))}</p>`;
+      return;
+    }
+    const ys = [];
+    usable.forEach(ds => ds.values.forEach(v => { if (v && v.y != null) ys.push(v.y); }));
+    const scale = axisScale(ys);
+    const W = 720, Ht = 280;
+    const pad = {l: 78, r: 18, t: 12, b: 40};
+    const iw = W - pad.l - pad.r, ih = Ht - pad.t - pad.b;
+    const n = scans.length;
+    const xOf = i => pad.l + (n === 1 ? iw / 2 : (i / (n - 1)) * iw);
+    const yOf = v => pad.t + ((scale.hi - v) / (scale.hi - scale.lo)) * ih;
+    const NS = "http://www.w3.org/2000/svg";
+    const plot = document.createElement("div");
+    plot.className = "chart-plot";
+    plot.dir = "ltr";
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "0 0 " + W + " " + Ht);
+    svg.setAttribute("role", "img");
+    svg.setAttribute("aria-label", L("Effective price by date","מחיר אפקטיבי לפי תאריך"));
+    const abort = new AbortController();
+    host._chartAbort = abort;
+    const listen = { signal: abort.signal };
+    function svgEl(name, attrs){
+      const node = document.createElementNS(NS, name);
+      Object.keys(attrs).forEach(k => node.setAttribute(k, attrs[k]));
+      return node;
+    }
+    scale.ticks.forEach(t => {
+      const y = yOf(t);
+      svg.appendChild(svgEl("line", {x1: pad.l, x2: W - pad.r, y1: y, y2: y, stroke: "#e4ddd3", "stroke-width": "1"}));
+      const tx = svgEl("text", {x: pad.l - 8, y: y + 4, "text-anchor": "end", fill: "#5c564e", "font-size": "12"});
+      tx.textContent = "₪" + Math.round(t).toLocaleString("en-US");
+      svg.appendChild(tx);
+    });
+    const labelStep = Math.max(1, Math.ceil(n / 6));
+    scans.forEach((s, i) => {
+      if (i % labelStep !== 0 && i !== n - 1) return;
+      const anchor = n > 1 && i === 0 ? "start" : n > 1 && i === n - 1 ? "end" : "middle";
+      const tx = svgEl("text", {x: xOf(i), y: Ht - 14, "text-anchor": anchor, fill: "#5c564e", "font-size": "12"});
+      tx.textContent = s.label;
+      svg.appendChild(tx);
+    });
+    const hits = [];
+    usable.forEach(ds => {
+      let d = "", pen = false;
+      ds.values.forEach((v, i) => {
+        if (!v || v.y == null) { pen = false; return; }
+        d += (pen ? "L" : "M") + xOf(i).toFixed(1) + " " + yOf(v.y).toFixed(1) + " ";
+        pen = true;
+      });
+      if (d) svg.appendChild(svgEl("path", {d: d, fill: "none", stroke: ds.color, "stroke-width": "2.5", "stroke-linejoin": "round", "stroke-linecap": "round"}));
+      ds.values.forEach((v, i) => {
+        if (!v || v.y == null) return;
+        svg.appendChild(svgEl("circle", {cx: xOf(i), cy: yOf(v.y), r: 4.5, fill: ds.color, stroke: "#fffdf9", "stroke-width": "1.5"}));
+        hits.push({x: xOf(i), y: yOf(v.y), v: v, ds: ds, i: i});
+      });
+    });
+    plot.appendChild(svg);
+    const tip = document.createElement("div");
+    tip.className = "chart-tip";
+    tip.hidden = true;
+    plot.appendChild(tip);
+    host.appendChild(plot);
+
+    const legend = document.createElement("ul");
+    legend.className = "chart-legend";
+    usable.forEach(ds => {
+      const li = document.createElement("li");
+      li.innerHTML = `<i style="background:${esc(ds.color)}"></i>${esc(ds.label)}`;
+      legend.appendChild(li);
+    });
+    host.appendChild(legend);
+
+    const rows = [];
+    scans.forEach((s, i) => {
+      usable.forEach(ds => {
+        const v = ds.values[i];
+        if (!v || v.y == null) return;
+        rows.push(`<tr><td>${esc(s.tip || s.label)}</td><td>${esc(ds.label)}</td><td>${esc(v.model || "")}</td><td>${esc(nis(v.y))}</td><td>${v.mo == null ? "–" : esc(nis(v.mo))}</td></tr>`);
+      });
+    });
+    const table = document.createElement("details");
+    table.className = "chart-data";
+    table.innerHTML = `<summary>${esc(L("Numbers","המספרים"))}</summary><div class="table-wrap"><table><thead><tr>${
+      [L("Date","תאריך"), L("Company","חברה"), L("Model","דגם"), L("Effective","אפקטיבי"), L("Monthly","חודשי")].map(c => `<th>${esc(c)}</th>`).join("")
+    }</tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
+    host.appendChild(table);
+
+    function showTip(clientX, clientY, h){
+      const scan = scans[h.i];
+      const lines = [
+        `<div>${esc(scan.tip || scan.label)}</div>`,
+        `<div><i style="background:${esc(h.ds.color)};display:inline-block;width:.65rem;height:.65rem;border-radius:99px;margin-inline-end:.35rem"></i>${esc(h.ds.label)}</div>`
+      ];
+      if (h.v.model) lines.push(`<div>${esc(h.v.model)}</div>`);
+      lines.push(`<div>${esc(L("Effective","אפקטיבי"))} ${esc(nis(h.v.y))}</div>`);
+      if (h.v.mo != null) lines.push(`<div>${esc(L("Monthly","חודשי"))} ${esc(nis(h.v.mo))}</div>`);
+      tip.dir = document.documentElement.dir || "rtl";
+      tip.innerHTML = lines.join("");
+      tip.hidden = false;
+      const box = plot.getBoundingClientRect();
+      let left = clientX - box.left + 12;
+      let top = clientY - box.top - 8;
+      tip.style.left = "0px";
+      tip.style.top = "0px";
+      const tw = tip.offsetWidth, th = tip.offsetHeight;
+      if (left + tw > box.width - 4) left = clientX - box.left - tw - 12;
+      top = top - th;
+      if (top < 4) top = clientY - box.top + 16;
+      if (left < 4) left = 4;
+      tip.style.left = left + "px";
+      tip.style.top = top + "px";
+    }
+    function nearest(clientX, clientY, pointerType){
+      const ctm = svg.getScreenCTM();
+      if (!ctm) return null;
+      const pt = svg.createSVGPoint();
+      pt.x = clientX;
+      pt.y = clientY;
+      const p = pt.matrixTransform(ctm.inverse());
+      const thresh = (pointerType === "touch" ? 36 : 22) / Math.abs(ctm.a || 1);
+      let best = null, bestD = thresh;
+      hits.forEach(h => {
+        const d = Math.hypot(h.x - p.x, h.y - p.y);
+        if (d <= bestD) { best = h; bestD = d; }
+      });
+      return best;
+    }
+    // Mouse hover follows the pointer. A tap on a phone keeps the tooltip open
+    // until the next tap, because pointerleave fires as soon as the finger lifts.
+    svg.addEventListener("pointermove", (e) => {
+      if (e.pointerType !== "mouse") return;
+      const h = nearest(e.clientX, e.clientY, "mouse");
+      if (!h) { tip.hidden = true; return; }
+      showTip(e.clientX, e.clientY, h);
+    }, listen);
+    svg.addEventListener("pointerdown", (e) => {
+      const h = nearest(e.clientX, e.clientY, e.pointerType || "touch");
+      if (!h) { tip.hidden = true; return; }
+      showTip(e.clientX, e.clientY, h);
+    }, listen);
+    plot.addEventListener("pointerleave", (e) => {
+      if (!e.pointerType || e.pointerType === "mouse") tip.hidden = true;
+    }, listen);
+    document.addEventListener("pointerdown", (e) => {
+      if (!plot.contains(e.target)) tip.hidden = true;
+    }, listen);
+  }
+
+  function overviewDatasets(){
+    const H = historyData();
+    const n = H.scans.length;
+    const mode = state.overviewMode || "avg";
+    return H.companies.map(c => {
+      const values = Array(n).fill(null);
+      for (let i = 0; i < n; i++){
+        const pts = [];
+        H.models.forEach(m => {
+          const hit = (m.series[c.id] || []).find(p => p[0] === i);
+          if (hit) pts.push({eff: hit[1], mo: hit[2], name: modelLabel(m)});
+        });
+        if (!pts.length) continue;
+        if (mode === "min"){
+          pts.sort((a, b) => a.eff - b.eff);
+          values[i] = {y: pts[0].eff, mo: pts[0].mo, model: pts[0].name};
+        } else {
+          const sum = pts.reduce((s, p) => s + p.eff, 0);
+          values[i] = {y: Math.round(sum / pts.length), model: L("Average of ","ממוצע של ") + pts.length + L(" models"," דגמים")};
+        }
+      }
+      return {label: companyLabel(c), color: c.color, values};
+    });
+  }
+
+  function drawOverview(){
+    const host = $("chart-overview");
+    if (!host || !historyData()) return;
+    mountLineChart(host, overviewDatasets());
+    document.querySelectorAll("#overview-mode button").forEach(b => {
+      b.setAttribute("aria-selected", b.dataset.mode === (state.overviewMode || "avg") ? "true" : "false");
+    });
+  }
+
+  function drawDetail(){
+    const H = historyData();
+    const host = $("chart-detail");
+    if (!H || !host) return;
+    const m = H.models.find(x => x.id === state.chartModel);
+    const n = H.scans.length;
+    const name = modelLabel(m);
+    const datasets = H.companies.map(c => ({
+      label: companyLabel(c),
+      color: c.color,
+      values: seriesValues(m && m.series[c.id], n).map(v => v ? Object.assign({model: name}, v) : null)
+    }));
+    mountLineChart(host, datasets);
+  }
+
+  function showModelChart(id){
+    if (!id) return;
+    state.chartModel = id;
+    const sel = $("hist-model");
+    if (sel) sel.value = id;
+    drawDetail();
+    const box = $("price-history");
+    if (box) box.scrollIntoView({behavior: "smooth", block: "start"});
+  }
+
+  function renderHistory(){
+    const host = $("price-history");
+    const H = historyData();
+    const title = L("Effective price over time","מחיר אפקטיבי לאורך זמן");
+    if (!H || !H.models || !H.models.length){
+      host.innerHTML = `<h2>${esc(title)}</h2><p>${esc(L("No saved scans to chart yet.","אין עדיין סריקות שמורות לגרף."))}</p>`;
+      return;
+    }
+    if (!state.chartModel || !H.models.some(m => m.id === state.chartModel)) state.chartModel = defaultChartModel();
+    if (!state.overviewMode) state.overviewMode = "avg";
+    const models = H.models.slice().sort((a, b) => modelLabel(a).localeCompare(modelLabel(b), HE() ? "he" : "en"));
+    const caption = HE() ? (H.definition && H.definition.he) : (H.definition && H.definition.en);
+    host.innerHTML = `<h2>${esc(title)}</h2>
+      <p class="legend chart-caption">${esc(caption || "")}</p>
+      <h3>${esc(L("Overview","סקירה"))}</h3>
+      <div class="seg" id="overview-mode">
+        <button type="button" data-mode="avg" aria-selected="${state.overviewMode === "avg"}">${esc(L("Average effective price","מחיר אפקטיבי ממוצע"))}</button>
+        <button type="button" data-mode="min" aria-selected="${state.overviewMode === "min"}">${esc(L("Cheapest effective price","המחיר האפקטיבי הזול"))}</button>
+      </div>
+      <div class="chart-block" id="chart-overview"></div>
+      <div class="hist-controls">
+        <label>${esc(L("Model and trim","דגם ורמת גימור"))}
+          <select id="hist-model">${models.map(m => `<option value="${esc(m.id)}" ${m.id === state.chartModel ? "selected" : ""}>${esc(modelLabel(m))}</option>`).join("")}</select>
+        </label>
+      </div>
+      <div class="chart-block" id="chart-detail"></div>`;
+    $("overview-mode").onclick = (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      state.overviewMode = b.dataset.mode;
+      drawOverview();
+    };
+    $("hist-model").onchange = (e) => { state.chartModel = e.target.value; drawDetail(); };
+    drawOverview();
+    drawDetail();
+  }
+
   function render(){
-    header(); toc(); renderDrops(); renderNewRemoved(); renderAssumptions(); renderOffersAndDetails(); renderStatic();
+    header(); toc(); renderDrops(); renderHistory(); renderNewRemoved(); renderAssumptions(); renderOffersAndDetails(); renderStatic();
   }
   render();
 })();

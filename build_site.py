@@ -23,7 +23,9 @@ if str(ROOT) not in sys.path:
 
 from leasing.compare import compare, latest_drops_from_history  # noqa: E402
 from leasing.normalize import load_reference  # noqa: E402
-from leasing.paths import DOCS, HISTORY, SITE_SRC  # noqa: E402
+from leasing.paths import DOCS, SITE_SRC  # noqa: E402
+from leasing.price_history import history_from_files  # noqa: E402
+from leasing.snapshots import load_snapshots  # noqa: E402
 
 TZ = ZoneInfo("Asia/Jerusalem")
 PAGES_URL = "https://ofirr-op.github.io/leasing-deals/"
@@ -31,14 +33,8 @@ REPO_URL = "https://github.com/ofirr-op/leasing-deals"
 
 
 def _snapshots() -> list[dict]:
-    files = sorted(HISTORY.glob("????-??-??.json"))
-    out = []
-    for f in files:
-        try:
-            out.append(json.loads(f.read_text(encoding="utf-8")))
-        except json.JSONDecodeError as e:
-            print(f"Skipping {f.name}: {e}", file=sys.stderr)
-    return out
+    """Every saved scan, oldest first (daily files and timestamped scans)."""
+    return [snap for _, snap in load_snapshots()]
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -51,17 +47,20 @@ def main(argv: list[str] | None = None) -> int:
         print("No snapshots in data/history/", file=sys.stderr)
         return 1
     if args.date:
-        curr = next((s for s in snaps if s.get("date") == args.date), None)
-        if not curr:
+        matches = [i for i, s in enumerate(snaps) if s.get("date") == args.date]
+        if not matches:
             print(f"No snapshot for {args.date}", file=sys.stderr)
             return 1
-        prev_list = [s for s in snaps if s.get("date") < args.date]
-        prev = prev_list[-1] if prev_list else None
-        hist_for_drops = prev_list + [curr]
+        # The latest scan on that day is the published page; earlier scans stay in the chart.
+        idx = matches[-1]
+        curr = snaps[idx]
+        prev = snaps[idx - 1] if idx else None
+        hist_for_drops = snaps[: idx + 1]
     else:
         curr = snaps[-1]
         prev = snaps[-2] if len(snaps) > 1 else None
         hist_for_drops = snaps
+        idx = len(snaps) - 1
 
     ref = load_reference()
     defaults, lic = ref["defaults"], ref["licensing"]
@@ -110,20 +109,27 @@ def main(argv: list[str] | None = None) -> int:
         "sources_list": sources_list,
     }
 
+    history = history_from_files(load_snapshots()[: idx + 1], defaults, lic)
+    history_payload = json.dumps(history, ensure_ascii=False, separators=(",", ":"))
+
     DOCS.mkdir(parents=True, exist_ok=True)
     (DOCS / "assets").mkdir(parents=True, exist_ok=True)
+    (DOCS / "data").mkdir(parents=True, exist_ok=True)
     shutil.copy2(SITE_SRC / "index.html", DOCS / "index.html")
     shutil.copy2(SITE_SRC / "styles.css", DOCS / "assets" / "styles.css")
     shutil.copy2(SITE_SRC / "app.js", DOCS / "assets" / "app.js")
     (DOCS / ".nojekyll").write_text("", encoding="utf-8")
     payload = "window.PAGE_DATA = " + json.dumps(page, ensure_ascii=False, separators=(",", ":")) + ";\n"
     (DOCS / "data.js").write_text(payload, encoding="utf-8")
+    (DOCS / "data" / "history.json").write_text(history_payload + "\n", encoding="utf-8")
+    (DOCS / "data" / "history.js").write_text("window.PRICE_HISTORY = " + history_payload + ";\n", encoding="utf-8")
 
     failed = [k for k, v in (curr.get("sources") or {}).items() if v.get("ok") is False]
     print(
         f"Built {DOCS} — {len(page['offers'])} offers, "
         f"{changes['counts']['drops']} drops, {changes['counts']['new']} new, "
-        f"{changes['counts']['removed']} removed"
+        f"{changes['counts']['removed']} removed, "
+        f"{len(history['models'])} models × {len(history['scans'])} scans in price history"
         + (f", failed sources: {', '.join(failed)}" if failed else "")
     )
     return 0

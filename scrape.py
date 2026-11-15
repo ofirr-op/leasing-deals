@@ -7,6 +7,9 @@ Usage (from the repo root):
     python scrape.py --source shlomo
     python scrape.py --save-raw
     python scrape.py --date 2026-11-14   # override the snapshot date (Asia/Jerusalem)
+
+Each run writes a new file under data/history/ (YYYY-MM-DDTHHMMSS.json) and
+does not overwrite an earlier scan. The legacy YYYY-MM-DD.json files stay as they are.
 """
 
 from __future__ import annotations
@@ -27,6 +30,7 @@ if str(ROOT) not in sys.path:
 from leasing.httputil import session  # noqa: E402
 from leasing.normalize import load_reference, normalize_all  # noqa: E402
 from leasing.paths import HISTORY, RAW  # noqa: E402
+from leasing.snapshots import load_snapshots, snapshot_day, unique_snapshot_path  # noqa: E402
 from leasing.sources import htzone, pery, shlomo  # noqa: E402
 
 TZ = ZoneInfo("Asia/Jerusalem")
@@ -42,21 +46,14 @@ def _offer_source(offer: dict) -> str:
 
 
 def _load_history() -> list[tuple[str, dict]]:
-    snaps: list[tuple[str, dict]] = []
-    if not HISTORY.is_dir():
-        return snaps
-    for path in sorted(HISTORY.glob("????-??-??.json")):
-        try:
-            snaps.append((path.stem, json.loads(path.read_text(encoding="utf-8"))))
-        except json.JSONDecodeError as e:
-            print(f"Skipping unreadable snapshot {path.name}: {e}", file=sys.stderr)
-    return snaps
+    """Every saved scan, oldest first. Stems may be YYYY-MM-DD or YYYY-MM-DDTHHMMSS."""
+    return [(path.stem, snap) for path, snap in load_snapshots()]
 
 
 def _previous_offers(name: str, snaps: list[tuple[str, dict]], date: str) -> tuple[list[dict], str | None]:
     """Newest snapshot on or before `date` that still has offers for `name`."""
     for snap_date, snap in reversed(snaps):
-        if snap_date > date:
+        if snapshot_day(snap_date) > date:
             continue
         offers = [o for o in (snap.get("offers") or []) if _offer_source(o) == name]
         if offers:
@@ -115,13 +112,13 @@ def main(argv: list[str] | None = None) -> int:
     ref = load_reference()
     offers = normalize_all(results, ref)
 
-    # A partial rerun (--source) must not drop other sources from today's file.
-    # A source that failed keeps its offers from the newest snapshot that has them,
-    # so one blocked site does not wipe that column or fail the daily job.
+    # A partial rerun (--source) keeps the other companies from the latest scan
+    # on or before this date. A failed source keeps its offers from the newest
+    # snapshot that still has them. The result is always a new file.
     snaps = _load_history()
-    out_preview = Path(args.out) if args.out else HISTORY / f"{date}.json"
-    if args.source and out_preview.exists():
-        prev = json.loads(out_preview.read_text(encoding="utf-8"))
+    prior = [(stem, snap) for stem, snap in snaps if snapshot_day(stem) <= date]
+    if args.source and prior:
+        prev = prior[-1][1]
         fresh = {o["key"] for o in offers}
         for o in prev.get("offers") or []:
             src = _offer_source(o)
@@ -181,7 +178,10 @@ def main(argv: list[str] | None = None) -> int:
         "offers": offers,
     }
     HISTORY.mkdir(parents=True, exist_ok=True)
-    out = Path(args.out) if args.out else HISTORY / f"{date}.json"
+    # A new file per scan, so a second run on the same day cannot replace the first.
+    # --out is an explicit path and may replace that one file.
+    out = Path(args.out) if args.out else unique_snapshot_path(date, now)
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(snap, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Wrote {out} ({len(offers)} normalized offers)")
 
