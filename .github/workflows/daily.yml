@@ -1,0 +1,76 @@
+# Daily scrape + GitHub Pages publish for https://ofirr-op.github.io/leasing-deals/
+name: Daily scrape and publish
+
+on:
+  schedule:
+    # 04:00 UTC = 06:00 IST in winter, 07:00 IDT in summer
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Scrape current offers
+        env:
+          TZ: Asia/Jerusalem
+        run: |
+          # A failed source keeps its previous offers inside scrape.py and the
+          # process still exits 0. A hard failure (nothing to publish) must not
+          # fail the job or replace history with an empty snapshot.
+          if python scrape.py; then
+            echo "Scrape finished"
+          else
+            echo "Scrape failed; restoring previous history snapshots"
+            git checkout -- data/history || true
+            git clean -fd -- data/history || true
+          fi
+
+      - name: Build the site
+        env:
+          TZ: Asia/Jerusalem
+        run: python build_site.py
+
+      - name: Commit snapshot and generated site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/history docs
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: daily snapshot $(TZ=Asia/Jerusalem date +%F)"
+            git push
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

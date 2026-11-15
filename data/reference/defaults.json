@@ -1,0 +1,19 @@
+{
+  "km": 20000,
+  "petrol": 7.85,
+  "diesel": null,
+  "elec": 0.6352,
+  "infl": 2.0,
+  "xRate": null,
+  "shDisc": false,
+  "peryMaint": false,
+  "cmp": false,
+  "term_default": 36,
+  "included_km": 20000,
+  "notes": {
+    "petrol": "Regulated 95-octane self-service max from 5 Nov 2026 (₪7.35 on 1–4 Nov).",
+    "elec": "Household rate incl. VAT from 1 Jul 2026.",
+    "infl": "Bank of Israel staff forecast, October 2026.",
+    "shDisc": "Shlomo ₪3,000 online discount for deals signed by 30 Nov 2026."
+  }
+}

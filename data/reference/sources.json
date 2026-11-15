@@ -1,0 +1,98 @@
+[
+  {
+    "title": {
+      "en": "Shlomo Sixt private leasing catalog",
+      "he": "קטלוג ליסינג פרטי של שלמה SIXT"
+    },
+    "href": "https://www.shlomo.co.il/leasing",
+    "site": "shlomo.co.il"
+  },
+  {
+    "title": {
+      "en": "Shlomo private-operational leasing promo terms (to 30 Nov 2026)",
+      "he": "תנאי מבצע ליסינג פרטי-תפעולי של שלמה (עד 30.11.2026)"
+    },
+    "href": "https://d3g3mkf2ohk44o.cloudfront.net/media/fr0fks25/שלמה-פרטיפעולי-301126.pdf",
+    "site": "Shlomo PDF"
+  },
+  {
+    "title": {
+      "en": "Pery private leasing",
+      "he": "ליסינג פרטי של פרי"
+    },
+    "href": "https://leasing.pery.co.il/",
+    "site": "leasing.pery.co.il"
+  },
+  {
+    "title": {
+      "en": "Pery site terms",
+      "he": "תנאי אתר פרי"
+    },
+    "href": "https://leasing.pery.co.il/eula",
+    "site": "leasing.pery.co.il"
+  },
+  {
+    "title": {
+      "en": "HTZone private leasing offers (club)",
+      "he": "עסקאות ליסינג פרטי ב-HTZone (מועדון)"
+    },
+    "href": "https://www.htzone.co.il/sale/103",
+    "site": "htzone.co.il"
+  },
+  {
+    "title": {
+      "en": "WLTP vehicle models registry",
+      "he": "מאגר דגמי רכב WLTP"
+    },
+    "href": "https://data.gov.il/dataset/degem-rechev-wltp",
+    "site": "data.gov.il"
+  },
+  {
+    "title": {
+      "en": "MoT fee order, April 2026",
+      "he": "צו האגרות של משרד התחבורה, אפריל 2026"
+    },
+    "href": "https://www.gov.il/BlobFolder/policy/car_fees_2026/he/%D7%94%D7%95%D7%A8%D7%90%D7%AA%20%D7%A0%D7%95%D7%94%D7%9C%20%D7%90%D7%92%D7%A8%D7%95%D7%AA%20%D7%90%D7%A4%D7%A8%D7%99%D7%9C%202026%20%D7%97%D7%AA%D7%95%D7%9E%D7%94.pdf",
+    "site": "gov.il"
+  },
+  {
+    "title": {
+      "en": "Fuel price for November 2026",
+      "he": "מחיר הבנזין לנובמבר 2026"
+    },
+    "href": "https://www.calcalist.co.il/local_news/article/rje0rn116gx",
+    "site": "calcalist.co.il"
+  },
+  {
+    "title": {
+      "en": "Household electricity tariff from 1 Jul 2026",
+      "he": "תעריף החשמל הביתי מ-1.7.2026"
+    },
+    "href": "https://www.supermarker.themarker.com/bills/guides/electricity-tariff-2026",
+    "site": "themarker.com"
+  },
+  {
+    "title": {
+      "en": "Bank of Israel staff forecast, October 2026",
+      "he": "תחזית חטיבת המחקר של בנק ישראל, אוקטובר 2026"
+    },
+    "href": "https://boi.org.il/media/ndoj4zxm/press-release-staff-forecast-october-2026.pdf",
+    "site": "boi.org.il"
+  },
+  {
+    "title": {
+      "en": "AVATR 11 importer spec sheet (21.6 kWh/100 km Ultra)",
+      "he": "מפרט יבואן AVATR 11 (21.6 קוט\"ש/100 ק\"מ, Ultra)"
+    },
+    "href": "https://www.cartube.co.il/images/mifrat/avatr/avatr-11-mifrat-2025-6.pdf",
+    "site": "cartube.co.il"
+  },
+  {
+    "title": {
+      "en": "Source repository",
+      "he": "מאגר הקוד"
+    },
+    "href": "https://github.com/ofirr-op/leasing-deals",
+    "site": "github.com/ofirr-op/leasing-deals"
+  }
+]

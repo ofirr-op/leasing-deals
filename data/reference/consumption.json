@@ -1,0 +1,1517 @@
+{
+  "by_key": {
+    "S-582": {
+      "l100": 5.68,
+      "co2": 131,
+      "rng": null,
+      "reg": "885/707 B351B 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-325-1MK1A-0000": {
+      "l100": 4.99,
+      "co2": 115,
+      "rng": null,
+      "reg": "794/34 CTHPX7-G1AN00 2026",
+      "kwh": null,
+      "fuel": "Petrol MHEV"
+    },
+    "S-M010144": {
+      "l100": 6.29,
+      "co2": 145,
+      "rng": null,
+      "reg": "443/118 WP4U 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-PJ3DLD": {
+      "l100": 5.2,
+      "co2": 120,
+      "rng": "119–123",
+      "reg": "676/1803 PJ-PJ3DLD 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-KJ12WZ": {
+      "l100": 5.25,
+      "co2": 121,
+      "rng": "121–126",
+      "reg": "778/653 KJ-KJG2WZ 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-XH5BAA": {
+      "l100": 3.69,
+      "co2": 85,
+      "rng": null,
+      "reg": "490/69 MABH10L-AHXNBW 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-OPL000568": {
+      "l100": 4.47,
+      "co2": 103,
+      "rng": "103–127",
+      "reg": "103/155 UPHPX 2026",
+      "kwh": null,
+      "fuel": "Petrol MHEV"
+    },
+    "S-M010134": {
+      "l100": 4.34,
+      "co2": 100,
+      "rng": null,
+      "reg": "443/127 WP43 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-M010134M": {
+      "l100": 4.34,
+      "co2": 100,
+      "rng": null,
+      "reg": "443/127 WP43 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-511": {
+      "l100": 5.55,
+      "co2": 128,
+      "rng": null,
+      "reg": "885/717 D6817 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-SNW5D561VPRIMEP": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/510 RB8A3 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-KJ72RZ-2": {
+      "l100": 5.51,
+      "co2": 127,
+      "rng": "127–130",
+      "reg": "778/646 KJP2WZ 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-KJG5WZ": {
+      "l100": 5.42,
+      "co2": 125,
+      "rng": "125–127",
+      "reg": "778/648 KJG5WZ 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-M010194": {
+      "l100": 4.99,
+      "co2": 115,
+      "rng": null,
+      "reg": "443/123 WS43 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-SC3H0A": {
+      "l100": 3.21,
+      "co2": 74,
+      "rng": "69–74",
+      "reg": "1014/63 SC3E-SC3H0A 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-EC15SG0EU01": {
+      "l100": 5.07,
+      "co2": 117,
+      "rng": null,
+      "reg": "1426/18 EEUA5 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-NW4DMD": {
+      "l100": 5.46,
+      "co2": 126,
+      "rng": "126–129",
+      "reg": "676/1785 NW-NW4DMD 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-YD5BVH": {
+      "l100": 3.73,
+      "co2": 86,
+      "rng": "86–87",
+      "reg": "672/225 MXPH11L-BHXNBW 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-OPL000554S5": {
+      "l100": 5.29,
+      "co2": 122,
+      "rng": "119–122",
+      "reg": "1660/7 CSHPY 2026",
+      "kwh": null,
+      "fuel": "Petrol MHEV"
+    },
+    "S-EC15SG0EU02": {
+      "l100": 5.07,
+      "co2": 117,
+      "rng": null,
+      "reg": "1426/19 EEUA5 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-SC3H0B": {
+      "l100": 1.91,
+      "co2": 44,
+      "rng": "41–44",
+      "reg": "1014/64 SC3E-SC3H0B 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-B1099R1VISLSCAC": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "reg": "1436/30 A12AB2OB 2026",
+      "kwh": null,
+      "fuel": "EREV"
+    },
+    "S-T71516F": {
+      "l100": 5.2,
+      "co2": 120,
+      "rng": null,
+      "reg": "1604/21 GTB22 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-OPL000554": {
+      "l100": 5.29,
+      "co2": 122,
+      "rng": "119–122",
+      "reg": "1660/7 CSHPY 2026",
+      "kwh": null,
+      "fuel": "Petrol MHEV"
+    },
+    "S-M010197": {
+      "l100": 5.46,
+      "co2": 126,
+      "rng": null,
+      "reg": "443/121 W943 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-BX5BVA": {
+      "l100": 4.38,
+      "co2": 101,
+      "rng": "100–101",
+      "reg": "672/239 MXPJ10L-BHXNBW 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-T71516FLUX": {
+      "l100": 5.2,
+      "co2": 120,
+      "rng": null,
+      "reg": "1604/22 GTB22 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-B1099R1VISLSCAE": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "reg": "1436/29 A12AB2OB 2026",
+      "kwh": null,
+      "fuel": "EREV"
+    },
+    "S-PV3DCD": {
+      "l100": 4.99,
+      "co2": 115,
+      "rng": "112–115",
+      "reg": "676/1826 NX-PV3DAD 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-M010140": {
+      "l100": 7.5,
+      "co2": 173,
+      "rng": null,
+      "reg": "443/77 W94U 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-SA2H0C": {
+      "l100": 2.69,
+      "co2": 62,
+      "rng": null,
+      "reg": "1014/47 SA2-SA2H0C 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-1VS4K6A1TEV1PRIME": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/487 LS4DJ 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-SR5913": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "reg": "1321/29 5S6AA 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-SA2H0D": {
+      "l100": 2.08,
+      "co2": 48,
+      "rng": null,
+      "reg": "1014/48 SA2-SA2H0D 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-SR5914": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "reg": "1321/30 5S6BA 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-CK9A1734": {
+      "l100": 5.74,
+      "co2": 151,
+      "rng": null,
+      "reg": "496/234 EBYHZ 2026",
+      "kwh": null,
+      "fuel": "Diesel"
+    },
+    "S-CZW5K6A1TEV1PRIME": {
+      "l100": 4.64,
+      "co2": 107,
+      "rng": "103–107",
+      "reg": "481/603 HB811 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-SR5914M": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "reg": "1321/30 5S6BA 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-1VS4K6A1TEV1FL": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/429 LS4DJ 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-LYNKCO01PRO25": {
+      "l100": 2.73,
+      "co2": 63,
+      "rng": "20–63",
+      "reg": "1346/21 CX11 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-T71513XELE": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": null,
+      "reg": "1605/6 GTBCD 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-CX58AG": {
+      "l100": 4.9,
+      "co2": 113,
+      "rng": "113–115",
+      "reg": "413/744 ZVG13L-RHXNBB 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-T7160USELG": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": "23–54",
+      "reg": "1604/25 BBDE 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-905": {
+      "l100": 5.46,
+      "co2": 126,
+      "rng": "126–128",
+      "reg": "416/296 PV81G 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-436": {
+      "l100": 5.77,
+      "co2": 133,
+      "rng": null,
+      "reg": "1566/23 E0A1R 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-989": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "885/699 PU3DG 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-T71513XHAM": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": null,
+      "reg": "1605/8 GTBCD 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-GM2WXTMCL2B": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "590/282 GM2WXTMCL2B 2026",
+      "kwh": null,
+      "fuel": "Petrol MHEV"
+    },
+    "S-T7160USPRE": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": "23–54",
+      "reg": "1604/26 BBDE 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-M010171": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "reg": "443/108 WC43 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-LYNKCO01HALO25": {
+      "l100": 2.73,
+      "co2": 63,
+      "rng": "20–63",
+      "reg": "1346/16 CX11 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-GXWDD5G1GEV1PURE": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/507 JADD1 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-T71513XVISION": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": null,
+      "reg": "1605/7 GTBCD 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-SA3E": {
+      "l100": 2.17,
+      "co2": 50,
+      "rng": "21–50",
+      "reg": "1014/55 SA3-SA3E 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-M010170": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "reg": "443/107 WC43 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-GM2WXTXCL2B": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "590/284 GM2WXTXCL2B 2026",
+      "kwh": null,
+      "fuel": "Petrol MHEV"
+    },
+    "S-GM2WXTXCL2BINS": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "590/283 GM2WXTXCL2B 2026",
+      "kwh": null,
+      "fuel": "Petrol MHEV"
+    },
+    "S-GXWDD5G1GEV1EX": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/504 JADD1 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-SA3E02": {
+      "l100": 1.52,
+      "co2": 35,
+      "rng": "9–35",
+      "reg": "1014/56 SA3-SA3E0 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-486": {
+      "l100": 8.56,
+      "co2": 225,
+      "rng": "214–225",
+      "reg": "1566/20 40B1E 2026",
+      "kwh": null,
+      "fuel": "Diesel"
+    },
+    "S-GXWDD5G1GEV1ULT": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/506 JADD1 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-LYNKCO08PRO25": {
+      "l100": 1.0,
+      "co2": 23,
+      "rng": null,
+      "reg": "1346/11 DX11 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-T6481ZA": {
+      "l100": 2.04,
+      "co2": 47,
+      "rng": null,
+      "reg": "1604/19 BDDE 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-SA3E01": {
+      "l100": 3.08,
+      "co2": 71,
+      "rng": "26–71",
+      "reg": "1014/60 SA3-SA3E01 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-T6480WRV": {
+      "l100": 1.65,
+      "co2": 38,
+      "rng": null,
+      "reg": "1605/4 BDDE 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-GXWDD5G1GEV1EXCELLENCE": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/505 JADD1 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-LYNKCO08HALO25": {
+      "l100": 1.0,
+      "co2": 23,
+      "rng": null,
+      "reg": "1346/12 DX11 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-T6481ZALIM": {
+      "l100": 2.04,
+      "co2": 47,
+      "rng": null,
+      "reg": "1604/20 BDDE 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "S-HKW7D5G1FEV1LUX": {
+      "l100": 6.59,
+      "co2": 152,
+      "rng": null,
+      "reg": "481/538 P2811 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "S-SQJFPRIMUM": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/500 MDB 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "S-SQJF": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/502 MDB 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "P-45": {
+      "l100": 5.68,
+      "co2": 131,
+      "rng": null,
+      "reg": "885/707 B351B 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "P-129": {
+      "l100": 5.25,
+      "co2": 121,
+      "rng": "121–126",
+      "reg": "778/653 KJ-KJG2WZ 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "P-131": {
+      "l100": 4.9,
+      "co2": 113,
+      "rng": "113–115",
+      "reg": "413/744 ZVG13L-RHXNBB 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "P-134": {
+      "l100": 1.91,
+      "co2": 44,
+      "rng": "41–44",
+      "reg": "1014/64 SC3E-SC3H0B 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "P-135": {
+      "l100": 2.69,
+      "co2": 62,
+      "rng": null,
+      "reg": "1014/47 SA2-SA2H0C 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "P-136": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/510 RB8A3 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "P-137": {
+      "l100": 5.46,
+      "co2": 126,
+      "rng": "126–129",
+      "reg": "676/1785 NW-NW4DMD 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "P-139": {
+      "l100": 2.73,
+      "co2": 63,
+      "rng": "20–63",
+      "reg": "1346/21 CX11 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "P-140": {
+      "l100": 4.99,
+      "co2": 115,
+      "rng": "112–115",
+      "reg": "676/1826 NX-PV3DAD 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "P-144": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": null,
+      "reg": "1605/6 GTBCD 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "P-145": {
+      "l100": 3.21,
+      "co2": 74,
+      "rng": "69–74",
+      "reg": "1014/63 SC3E-SC3H0A 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "P-147": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/487 LS4DJ 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "P-148": {
+      "l100": 2.04,
+      "co2": 47,
+      "rng": null,
+      "reg": "1604/19 BDDE 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "P-149": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": "23–54",
+      "reg": "1604/26 BBDE 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "P-150": {
+      "l100": 1.0,
+      "co2": 23,
+      "rng": null,
+      "reg": "1346/11 DX11 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "P-27": {
+      "l100": 4.64,
+      "co2": 107,
+      "rng": "103–107",
+      "reg": "481/603 HB811 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "P-17": {
+      "l100": 4.38,
+      "co2": 101,
+      "rng": "100–101",
+      "reg": "672/239 MXPJ10L-BHXNBW 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "P-47": {
+      "l100": 4.47,
+      "co2": 103,
+      "rng": "101–103",
+      "reg": "885/695 CP81E 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "P-64": {
+      "l100": 5.51,
+      "co2": 127,
+      "rng": "127–130",
+      "reg": "778/646 KJP2WZ 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "H-129890": {
+      "l100": 4.99,
+      "co2": 115,
+      "rng": "112–115",
+      "reg": "676/1826 NX-PV3DAD 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "H-142240": {
+      "l100": 4.64,
+      "co2": 107,
+      "rng": "103–107",
+      "reg": "481/603 HB811 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-145686": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/510 RB8A3 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "H-145705": {
+      "l100": 5.51,
+      "co2": 127,
+      "rng": "127–130",
+      "reg": "778/646 KJP2WZ 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "H-145727": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/487 LS4DJ 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-153702": {
+      "l100": 5.2,
+      "co2": 120,
+      "rng": null,
+      "reg": "1604/21 GTB22 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-153707": {
+      "l100": 3.21,
+      "co2": 74,
+      "rng": "69–74",
+      "reg": "1014/63 SC3E-SC3H0A 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-153721": {
+      "l100": 5.29,
+      "co2": 122,
+      "rng": "119–122",
+      "reg": "1660/7 CSHPY 2026",
+      "kwh": null,
+      "fuel": "Petrol MHEV"
+    },
+    "H-154019": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": "23–54",
+      "reg": "1604/26 BBDE 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-154026": {
+      "l100": 2.17,
+      "co2": 50,
+      "rng": "21–50",
+      "reg": "1014/55 SA3-SA3E 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-161581": {
+      "l100": 2.04,
+      "co2": 47,
+      "rng": null,
+      "reg": "1604/19 BDDE 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-161616": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": null,
+      "reg": "1605/8 GTBCD 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-161621": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "reg": "1321/29 5S6AA 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-161623": {
+      "l100": 5.55,
+      "co2": 128,
+      "rng": null,
+      "reg": "885/717 D6817 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "H-164485": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "590/282 GM2WXTMCL2B 2026",
+      "kwh": null,
+      "fuel": "Petrol MHEV"
+    },
+    "H-164490": {
+      "l100": 2.73,
+      "co2": 63,
+      "rng": "20–63",
+      "reg": "1346/21 CX11 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-164495": {
+      "l100": 5.07,
+      "co2": 117,
+      "rng": null,
+      "reg": "1426/19 EEUA5 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-164499": {
+      "l100": 5.42,
+      "co2": 125,
+      "rng": "125–127",
+      "reg": "778/648 KJG5WZ 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "H-164505": {
+      "l100": 4.47,
+      "co2": 103,
+      "rng": "103–127",
+      "reg": "103/155 UPHPX 2026",
+      "kwh": null,
+      "fuel": "Petrol MHEV"
+    },
+    "H-164532": {
+      "l100": 4.9,
+      "co2": 113,
+      "rng": "113–115",
+      "reg": "413/744 ZVG13L-RHXNBB 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-164953": {
+      "l100": 5.46,
+      "co2": 126,
+      "rng": "126–128",
+      "reg": "416/296 PV81G 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-167080": {
+      "l100": 5.68,
+      "co2": 131,
+      "rng": null,
+      "reg": "885/707 B351B 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "H-167089": {
+      "l100": 6.29,
+      "co2": 145,
+      "rng": null,
+      "reg": "443/118 WP4U 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "H-167093": {
+      "l100": 5.07,
+      "co2": 117,
+      "rng": null,
+      "reg": "1426/18 EEUA5 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-167096": {
+      "l100": 3.73,
+      "co2": 86,
+      "rng": "86–87",
+      "reg": "672/225 MXPH11L-BHXNBW 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-167097": {
+      "l100": 1.91,
+      "co2": 44,
+      "rng": "41–44",
+      "reg": "1014/64 SC3E-SC3H0B 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-167101": {
+      "l100": 5.2,
+      "co2": 120,
+      "rng": null,
+      "reg": "1604/22 GTB22 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-167104": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/429 LS4DJ 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-167106": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "reg": "1321/30 5S6BA 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-167107": {
+      "l100": 2.73,
+      "co2": 63,
+      "rng": "20–63",
+      "reg": "1346/16 CX11 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-167109": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "590/284 GM2WXTXCL2B 2026",
+      "kwh": null,
+      "fuel": "Petrol MHEV"
+    },
+    "H-167110": {
+      "l100": 2.04,
+      "co2": 47,
+      "rng": null,
+      "reg": "1604/20 BDDE 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-167111": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": null,
+      "reg": "1605/6 GTBCD 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-152697": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": null,
+      "kwh": 21.6,
+      "fuel": "EV"
+    },
+    "H-159856": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/504 JADD1 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-159863": {
+      "l100": 5.68,
+      "co2": 131,
+      "rng": null,
+      "reg": "885/707 B351B 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "H-159882": {
+      "l100": 4.38,
+      "co2": 101,
+      "rng": "100–101",
+      "reg": "672/239 MXPJ10L-BHXNBW 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-159905": {
+      "l100": 3.21,
+      "co2": 74,
+      "rng": "69–74",
+      "reg": "1014/63 SC3E-SC3H0A 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-159909": {
+      "l100": 2.17,
+      "co2": 50,
+      "rng": "21–50",
+      "reg": "1014/55 SA3-SA3E 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-159913": {
+      "l100": 2.69,
+      "co2": 62,
+      "rng": null,
+      "reg": "1014/47 SA2-SA2H0C 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-159916": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/429 LS4DJ 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-159918": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "reg": "481/510 RB8A3 2026",
+      "kwh": null,
+      "fuel": "Petrol"
+    },
+    "H-159919": {
+      "l100": 4.64,
+      "co2": 107,
+      "rng": "103–107",
+      "reg": "481/603 HB811 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-159923": {
+      "l100": 4.99,
+      "co2": 115,
+      "rng": null,
+      "reg": "443/123 WS43 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-164538": {
+      "l100": 4.34,
+      "co2": 100,
+      "rng": null,
+      "reg": "443/127 WP43 2026",
+      "kwh": null,
+      "fuel": "Hybrid"
+    },
+    "H-164539": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": null,
+      "reg": "1605/8 GTBCD 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    },
+    "H-164540": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "reg": "443/108 WC43 2026",
+      "kwh": null,
+      "fuel": "PHEV"
+    }
+  },
+  "by_registry": {
+    "885/707 B351B 2026": {
+      "l100": 5.68,
+      "co2": 131,
+      "rng": null,
+      "kwh": null
+    },
+    "794/34 CTHPX7-G1AN00 2026": {
+      "l100": 4.99,
+      "co2": 115,
+      "rng": null,
+      "kwh": null
+    },
+    "443/118 WP4U 2026": {
+      "l100": 6.29,
+      "co2": 145,
+      "rng": null,
+      "kwh": null
+    },
+    "676/1803 PJ-PJ3DLD 2026": {
+      "l100": 5.2,
+      "co2": 120,
+      "rng": "119–123",
+      "kwh": null
+    },
+    "778/653 KJ-KJG2WZ 2026": {
+      "l100": 5.25,
+      "co2": 121,
+      "rng": "121–126",
+      "kwh": null
+    },
+    "490/69 MABH10L-AHXNBW 2026": {
+      "l100": 3.69,
+      "co2": 85,
+      "rng": null,
+      "kwh": null
+    },
+    "103/155 UPHPX 2026": {
+      "l100": 4.47,
+      "co2": 103,
+      "rng": "103–127",
+      "kwh": null
+    },
+    "443/127 WP43 2026": {
+      "l100": 4.34,
+      "co2": 100,
+      "rng": null,
+      "kwh": null
+    },
+    "885/717 D6817 2026": {
+      "l100": 5.55,
+      "co2": 128,
+      "rng": null,
+      "kwh": null
+    },
+    "481/510 RB8A3 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "778/646 KJP2WZ 2026": {
+      "l100": 5.51,
+      "co2": 127,
+      "rng": "127–130",
+      "kwh": null
+    },
+    "778/648 KJG5WZ 2026": {
+      "l100": 5.42,
+      "co2": 125,
+      "rng": "125–127",
+      "kwh": null
+    },
+    "443/123 WS43 2026": {
+      "l100": 4.99,
+      "co2": 115,
+      "rng": null,
+      "kwh": null
+    },
+    "1014/63 SC3E-SC3H0A 2026": {
+      "l100": 3.21,
+      "co2": 74,
+      "rng": "69–74",
+      "kwh": null
+    },
+    "1426/18 EEUA5 2026": {
+      "l100": 5.07,
+      "co2": 117,
+      "rng": null,
+      "kwh": null
+    },
+    "676/1785 NW-NW4DMD 2026": {
+      "l100": 5.46,
+      "co2": 126,
+      "rng": "126–129",
+      "kwh": null
+    },
+    "672/225 MXPH11L-BHXNBW 2026": {
+      "l100": 3.73,
+      "co2": 86,
+      "rng": "86–87",
+      "kwh": null
+    },
+    "1660/7 CSHPY 2026": {
+      "l100": 5.29,
+      "co2": 122,
+      "rng": "119–122",
+      "kwh": null
+    },
+    "1426/19 EEUA5 2026": {
+      "l100": 5.07,
+      "co2": 117,
+      "rng": null,
+      "kwh": null
+    },
+    "1014/64 SC3E-SC3H0B 2026": {
+      "l100": 1.91,
+      "co2": 44,
+      "rng": "41–44",
+      "kwh": null
+    },
+    "1436/30 A12AB2OB 2026": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "kwh": null
+    },
+    "1604/21 GTB22 2026": {
+      "l100": 5.2,
+      "co2": 120,
+      "rng": null,
+      "kwh": null
+    },
+    "443/121 W943 2026": {
+      "l100": 5.46,
+      "co2": 126,
+      "rng": null,
+      "kwh": null
+    },
+    "672/239 MXPJ10L-BHXNBW 2026": {
+      "l100": 4.38,
+      "co2": 101,
+      "rng": "100–101",
+      "kwh": null
+    },
+    "1604/22 GTB22 2026": {
+      "l100": 5.2,
+      "co2": 120,
+      "rng": null,
+      "kwh": null
+    },
+    "1436/29 A12AB2OB 2026": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "kwh": null
+    },
+    "676/1826 NX-PV3DAD 2026": {
+      "l100": 4.99,
+      "co2": 115,
+      "rng": "112–115",
+      "kwh": null
+    },
+    "443/77 W94U 2026": {
+      "l100": 7.5,
+      "co2": 173,
+      "rng": null,
+      "kwh": null
+    },
+    "1014/47 SA2-SA2H0C 2026": {
+      "l100": 2.69,
+      "co2": 62,
+      "rng": null,
+      "kwh": null
+    },
+    "481/487 LS4DJ 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "1321/29 5S6AA 2026": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "kwh": null
+    },
+    "1014/48 SA2-SA2H0D 2026": {
+      "l100": 2.08,
+      "co2": 48,
+      "rng": null,
+      "kwh": null
+    },
+    "1321/30 5S6BA 2026": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "kwh": null
+    },
+    "496/234 EBYHZ 2026": {
+      "l100": 5.74,
+      "co2": 151,
+      "rng": null,
+      "kwh": null
+    },
+    "481/603 HB811 2026": {
+      "l100": 4.64,
+      "co2": 107,
+      "rng": "103–107",
+      "kwh": null
+    },
+    "481/429 LS4DJ 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "1346/21 CX11 2026": {
+      "l100": 2.73,
+      "co2": 63,
+      "rng": "20–63",
+      "kwh": null
+    },
+    "1605/6 GTBCD 2026": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": null,
+      "kwh": null
+    },
+    "413/744 ZVG13L-RHXNBB 2026": {
+      "l100": 4.9,
+      "co2": 113,
+      "rng": "113–115",
+      "kwh": null
+    },
+    "1604/25 BBDE 2026": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": "23–54",
+      "kwh": null
+    },
+    "416/296 PV81G 2026": {
+      "l100": 5.46,
+      "co2": 126,
+      "rng": "126–128",
+      "kwh": null
+    },
+    "1566/23 E0A1R 2026": {
+      "l100": 5.77,
+      "co2": 133,
+      "rng": null,
+      "kwh": null
+    },
+    "885/699 PU3DG 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "1605/8 GTBCD 2026": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": null,
+      "kwh": null
+    },
+    "590/282 GM2WXTMCL2B 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "1604/26 BBDE 2026": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": "23–54",
+      "kwh": null
+    },
+    "443/108 WC43 2026": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "kwh": null
+    },
+    "1346/16 CX11 2026": {
+      "l100": 2.73,
+      "co2": 63,
+      "rng": "20–63",
+      "kwh": null
+    },
+    "481/507 JADD1 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "1605/7 GTBCD 2026": {
+      "l100": 2.3,
+      "co2": 53,
+      "rng": null,
+      "kwh": null
+    },
+    "1014/55 SA3-SA3E 2026": {
+      "l100": 2.17,
+      "co2": 50,
+      "rng": "21–50",
+      "kwh": null
+    },
+    "443/107 WC43 2026": {
+      "l100": 2.34,
+      "co2": 54,
+      "rng": null,
+      "kwh": null
+    },
+    "590/284 GM2WXTXCL2B 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "590/283 GM2WXTXCL2B 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "481/504 JADD1 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "1014/56 SA3-SA3E0 2026": {
+      "l100": 1.52,
+      "co2": 35,
+      "rng": "9–35",
+      "kwh": null
+    },
+    "1566/20 40B1E 2026": {
+      "l100": 8.56,
+      "co2": 225,
+      "rng": "214–225",
+      "kwh": null
+    },
+    "481/506 JADD1 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "1346/11 DX11 2026": {
+      "l100": 1.0,
+      "co2": 23,
+      "rng": null,
+      "kwh": null
+    },
+    "1604/19 BDDE 2026": {
+      "l100": 2.04,
+      "co2": 47,
+      "rng": null,
+      "kwh": null
+    },
+    "1014/60 SA3-SA3E01 2026": {
+      "l100": 3.08,
+      "co2": 71,
+      "rng": "26–71",
+      "kwh": null
+    },
+    "1605/4 BDDE 2026": {
+      "l100": 1.65,
+      "co2": 38,
+      "rng": null,
+      "kwh": null
+    },
+    "481/505 JADD1 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "1346/12 DX11 2026": {
+      "l100": 1.0,
+      "co2": 23,
+      "rng": null,
+      "kwh": null
+    },
+    "1604/20 BDDE 2026": {
+      "l100": 2.04,
+      "co2": 47,
+      "rng": null,
+      "kwh": null
+    },
+    "481/538 P2811 2026": {
+      "l100": 6.59,
+      "co2": 152,
+      "rng": null,
+      "kwh": null
+    },
+    "481/500 MDB 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "481/502 MDB 2026": {
+      "l100": null,
+      "co2": null,
+      "rng": null,
+      "kwh": null
+    },
+    "885/695 CP81E 2026": {
+      "l100": 4.47,
+      "co2": 103,
+      "rng": "101–103",
+      "kwh": null
+    }
+  },
+  "note": "WLTP L/100 km derived from official CO2 (g/km) × 0.04336 (petrol) or 0.03804 (diesel). kWh/100 km for AVATR 11 Ultra is from the importer spec sheet, not the registry."
+}
