@@ -6,12 +6,6 @@ on:
     # 04:00 UTC = 06:00 IST in winter, 07:00 IDT in summer
     - cron: "0 4 * * *"
   workflow_dispatch:
-  # One-shot starter. workflow_dispatch is not available to the integration
-  # token, and snapshot commits do not touch this path, so they cannot loop.
-  push:
-    branches: [main]
-    paths:
-      - ".github/dispatch-daily"
 
 permissions:
   contents: write
