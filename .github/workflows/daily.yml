@@ -25,6 +25,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # schedule and workflow_dispatch re-runs keep the original head_sha
+          # when ref is omitted, so a later push is not a fast-forward.
+          # A branch name fetches the current tip of main.
+          ref: ${{ github.event.repository.default_branch || 'main' }}
+          fetch-depth: 0
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -55,7 +62,10 @@ jobs:
         run: python build_site.py
 
       - name: Commit snapshot and generated site
+        env:
+          TZ: Asia/Jerusalem
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # data/history is append-only: each scan is a new timestamped file.
@@ -63,10 +73,61 @@ jobs:
           git add data/history docs
           if git diff --staged --quiet; then
             echo "No changes to commit"
-          else
-            git commit -m "chore: daily snapshot $(TZ=Asia/Jerusalem date +%F)"
-            git push
+            exit 0
           fi
+          git commit -m "chore: daily snapshot $(date +%F)"
+
+          branch="$(git branch --show-current)"
+          if [ -z "$branch" ]; then
+            echo "Checkout is detached; refusing to push"
+            exit 1
+          fi
+
+          # main may have moved during the scrape, or this run may have been
+          # queued behind another publish. Fetch, rebase onto the tip, and
+          # retry the push. Never force-push. History files are append-only;
+          # if generated docs conflict, keep every snapshot and rebuild.
+          for attempt in 1 2 3 4 5; do
+            if ! git fetch origin "$branch"; then
+              echo "Fetch failed (attempt ${attempt}); retrying"
+              sleep $((attempt * 5))
+              continue
+            fi
+            if ! git merge-base --is-ancestor "origin/$branch" HEAD; then
+              if ! git rebase "origin/$branch"; then
+                conflicted="$(git diff --name-only --diff-filter=U || true)"
+                if printf '%s\n' "$conflicted" | grep -q '^data/history/'; then
+                  echo "Refusing to resolve a conflict in append-only history:"
+                  printf '%s\n' "$conflicted"
+                  git rebase --abort
+                  exit 1
+                fi
+                other="$(printf '%s\n' "$conflicted" | grep -v '^docs/' || true)"
+                if [ -n "$other" ]; then
+                  echo "Unexpected rebase conflict:"
+                  printf '%s\n' "$conflicted"
+                  git rebase --abort
+                  exit 1
+                fi
+                git checkout --ours -- docs
+                git add docs data/history
+                GIT_EDITOR=true git rebase --continue
+              fi
+              python build_site.py
+              git add docs
+              if ! git diff --staged --quiet; then
+                git commit --amend --no-edit
+              fi
+            fi
+            if git push origin "HEAD:${branch}"; then
+              echo "Pushed snapshot to ${branch}"
+              exit 0
+            fi
+            echo "Push rejected (attempt ${attempt}); fetching and retrying"
+            sleep $((attempt * 5))
+          done
+          echo "Failed to push snapshot after retries"
+          exit 1
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
