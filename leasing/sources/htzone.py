@@ -1,4 +1,4 @@
-"""Scrape HTZone private-leasing club offers (sale/103, category 3)."""
+"""Scrape HTZone private-leasing club offers (sale/103, "ליסינג פרטי" tab)."""
 
 from __future__ import annotations
 
@@ -7,15 +7,19 @@ from typing import Any
 
 from bs4 import BeautifulSoup
 
-from leasing.httputil import get, polite_sleep, post, session
+from leasing.httputil import get, polite_sleep, session
 
 SALE_URL = "https://www.htzone.co.il/sale/103"
-AJAX_URL = "https://www.htzone.co.il/_ajax/ajax.index.php"
+# Next.js listing. The old POST /_ajax/ajax.index.php?act=get_sale_html now 404s.
+SALE_ITEMS_URL = "https://www.htzone.co.il/api/sale-items"
 ITEM_URL = "https://www.htzone.co.il/item/{id}/"
 PAGE_ID = 103
-CATEGORY = 3  # private leasing
-COUNT = 15
+# sale/103 is the whole "הטבות רכב" page. Private leasing is one tab
+# (label "ליסינג פרטי", id 2 as of 2026-11-16). The id is read from the page.
+PRIVATE_TAB_LABEL = "ליסינג פרטי"
+PRIVATE_TAB_FALLBACK = 2
 LANDING_IDS = {"116276", "160208"}
+_TAB_RE = re.compile(r'\{"id"\s*:\s*(\d+)\s*,\s*"label"\s*:\s*"([^"]*)"\}')
 
 SHEKEL = re.compile(
     r"(?:₪|ש[\"״']?ח)\s*([\d,]+)|([\d,]+)\s*(?:₪|ש[\"״']?ח)"
@@ -53,45 +57,94 @@ def _num(s: str | None) -> int | None:
     return int(s)
 
 
-def _list_ids(html: str) -> list[str]:
-    ids = []
-    seen = set()
-    for m in re.finditer(r"data-item=['\"](\d+)['\"]", html):
-        i = m.group(1)
-        if i not in seen:
-            seen.add(i)
-            ids.append(i)
-    return ids
+def _private_tab_id(html: str) -> int | None:
+    """Tab id for private leasing, from the sale page's Next.js payload."""
+    text = html.replace('\\"', '"')
+    for m in _TAB_RE.finditer(text):
+        label = re.sub(r"\s+", " ", m.group(2)).strip()
+        if label == PRIVATE_TAB_LABEL:
+            return int(m.group(1))
+    return None
 
 
-def _fetch_listing(s, start: int, filter_val) -> dict:
-    r = post(
+def _fetch_sale_items(s, cat: int, page: int) -> dict:
+    r = get(
         s,
-        AJAX_URL,
-        data={
-            "act": "get_sale_html",
-            "start": start,
-            "count": COUNT,
-            "filter": filter_val,
-            "page_id": PAGE_ID,
-            "max_price": "",
-            "min_price": "",
-            "brand": "[]",
-            "date": "[]",
-            "area": "[]",
-            "category": "[]",
-            "file": "sale",
-        },
+        SALE_ITEMS_URL,
+        params={"id": PAGE_ID, "cat": cat, "page": page},
         headers={
             "Referer": SALE_URL,
-            "Origin": "https://www.htzone.co.il",
-            "X-Requested-With": "XMLHttpRequest",
-            "Accept": "application/json, text/javascript, */*; q=0.01",
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Accept": "application/json",
         },
     )
     r.raise_for_status()
-    return r.json()
+    data = r.json()
+    if not isinstance(data, dict):
+        raise ValueError(f"HTZone sale-items returned {type(data).__name__}")
+    return data
+
+
+def _is_private_lease(item: dict) -> bool:
+    ga = item.get("ga") or {}
+    folded = re.sub(r"\s+", "", str(ga.get("item_category2") or ""))
+    if not folded:
+        return True
+    return "ליסינגפרטי" in folded
+
+
+def _item_id(item: dict) -> str | None:
+    ga = item.get("ga") or {}
+    iid = item.get("id")
+    if iid is None:
+        iid = ga.get("item_id")
+    if iid is None:
+        return None
+    return str(iid)
+
+
+def _collect_ids(s, cat: int, save_raw) -> tuple[list[str], list[str]]:
+    ids: list[str] = []
+    seen: set[str] = set()
+    errors: list[str] = []
+    page = 1
+    total = 0
+    raw_seen = 0
+    while page <= 40:
+        if page > 1:
+            polite_sleep(0.15)
+        try:
+            data = _fetch_sale_items(s, cat, page)
+        except Exception as e:  # noqa: BLE001
+            errors.append(f"listing cat={cat} page={page}: {e}")
+            break
+        if save_raw:
+            import json as _j
+
+            save_raw(
+                f"htzone_sale_items_c{cat}_p{page}.json",
+                _j.dumps(data, ensure_ascii=False).encode("utf-8"),
+            )
+        batch = data.get("data") or []
+        if not isinstance(batch, list):
+            errors.append(f"listing cat={cat} page={page}: data is not a list")
+            break
+        if page == 1:
+            try:
+                total = int(data.get("total") or 0)
+            except (TypeError, ValueError):
+                total = 0
+        for item in batch:
+            if not isinstance(item, dict) or not _is_private_lease(item):
+                continue
+            iid = _item_id(item)
+            if iid and iid not in seen:
+                seen.add(iid)
+                ids.append(iid)
+        raw_seen += len(batch)
+        if not batch or (total and raw_seen >= total):
+            break
+        page += 1
+    return ids, errors
 
 
 def _plain(html: str) -> str:
@@ -269,56 +322,33 @@ def parse_item(item_id: str, html: str) -> dict[str, Any] | None:
 
 def scrape(sess=None, save_raw=None) -> dict[str, Any]:
     s = sess or session()
-    # Warm up cookies from the sale page
-    land = get(s, SALE_URL, headers={"Referer": "https://www.htzone.co.il/"})
-    if save_raw:
-        save_raw("htzone_sale.html", land.content)
+    errors: list[str] = []
+    html = ""
+    try:
+        land = get(s, SALE_URL, headers={"Referer": "https://www.htzone.co.il/"})
+        land.raise_for_status()
+        html = land.text
+        if save_raw:
+            save_raw("htzone_sale.html", land.content)
+    except Exception as e:  # noqa: BLE001
+        errors.append(f"sale page: {e}")
 
-    ids: list[str] = []
-    last = False
-    start = 0
-    errors = []
-    used_filter = CATEGORY
-    # Some deployments want filter=3, others an empty filter + category nav.
-    for attempt_filter in (CATEGORY, "", 3):
-        try:
-            page0 = _fetch_listing(s, 0, attempt_filter)
-        except Exception as e:  # noqa: BLE001
-            errors.append(f"listing start=0 filter={attempt_filter}: {e}")
-            continue
-        html = (page0 or {}).get("sale_html") or ""
-        found = _list_ids(html)
-        if found:
-            used_filter = attempt_filter
-            ids.extend(found)
-            last = False
-            if save_raw:
-                save_raw("htzone_s_0.json", str(page0).encode("utf-8", "replace") if not isinstance(page0, (bytes, bytearray)) else page0)
-                import json as _j
-                save_raw("htzone_s_0.json", _j.dumps(page0, ensure_ascii=False).encode("utf-8"))
-            break
+    tab = _private_tab_id(html) if html else None
+    if tab is None:
+        errors.append(
+            f"private-leasing tab not found; using category {PRIVATE_TAB_FALLBACK}"
+        )
+        tab = PRIVATE_TAB_FALLBACK
+
+    ids, list_errors = _collect_ids(s, tab, save_raw)
+    errors.extend(list_errors)
+    if not ids and tab != PRIVATE_TAB_FALLBACK:
+        ids, list_errors = _collect_ids(s, PRIVATE_TAB_FALLBACK, save_raw)
+        errors.extend(list_errors)
+        if ids:
+            tab = PRIVATE_TAB_FALLBACK
     if not ids:
         raise ValueError("HTZone listing returned no items")
-
-    start = COUNT
-    while not last and start <= 200:
-        polite_sleep(0.2)
-        try:
-            page = _fetch_listing(s, start, used_filter)
-        except Exception as e:  # noqa: BLE001
-            errors.append(f"listing start={start}: {e}")
-            break
-        html = (page or {}).get("sale_html") or ""
-        batch = _list_ids(html)
-        if save_raw:
-            import json as _j
-            save_raw(f"htzone_s_{start}.json", _j.dumps(page, ensure_ascii=False).encode("utf-8"))
-        for i in batch:
-            if i not in ids:
-                ids.append(i)
-        # Don't trust last_item alone — it has been seen True before the list was finished.
-        last = not batch
-        start += COUNT
 
     offers = []
     skipped = []
@@ -353,5 +383,5 @@ def scrape(sess=None, save_raw=None) -> dict[str, Any]:
         "errors": errors,
         "skipped_landing": skipped,
         "raw_count": len(ids),
-        "filter": used_filter,
+        "filter": tab,
     }

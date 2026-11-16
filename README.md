@@ -102,4 +102,4 @@ If Shlomo, Pery or HTZone block GitHub’s runner IPs (403, empty catalogs, or a
 
 - Shlomo Sixt catalog: https://www.shlomo.co.il/leasing/catalog (Next.js payload `leasingCars.items`)
 - Pery API: `POST https://agents.pery.co.il/api/v1/leasing/get_cars`, then `get_car`, `get_excel_data`, `get_insurances`
-- HTZone: `POST https://www.htzone.co.il/_ajax/ajax.index.php` (`act=get_sale_html`, `page_id=103`, private-leasing category 3), then each item page
+- HTZone: `GET https://www.htzone.co.il/api/sale-items?id=103&cat=<private-leasing tab>&page=N` (the "ליסינג פרטי" tab on sale/103; the old `/_ajax/ajax.index.php` listing 404s), then each item page
